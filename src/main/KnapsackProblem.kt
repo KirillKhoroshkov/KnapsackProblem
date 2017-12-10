@@ -8,7 +8,7 @@ class KnapsackProblem(val thingList: Array<Thing>, val maxWeight: Int) {
 
     init {
         var cost = 0
-        for (element in thingList){
+        for (element in thingList) {
             cost += element.cost
         }
         totalCost = cost
@@ -41,7 +41,7 @@ class KnapsackProblem(val thingList: Array<Thing>, val maxWeight: Int) {
         var generation = randomGeneration()
         var bestMask = generation.maxBy { estimate(it) }!!
         var bestEstimation = estimate(bestMask)
-        while (mutationCount > 0 && bestEstimation != 1.0 ) {
+        while (mutationCount > 0 && bestEstimation != 1.0) {
             val estimateOfGeneration = estimate(generation)
             generation = nextGeneration(generation)
             if (estimate(generation) <= estimateOfGeneration) {
@@ -57,7 +57,7 @@ class KnapsackProblem(val thingList: Array<Thing>, val maxWeight: Int) {
             }
             val bestOfGeneration = generation.maxBy { estimate(it) }!!
             val estimationOfMask = estimate(bestOfGeneration)
-            if (estimationOfMask > bestEstimation){
+            if (estimationOfMask > bestEstimation) {
                 bestMask = bestOfGeneration
                 bestEstimation = estimationOfMask
             }
@@ -66,7 +66,7 @@ class KnapsackProblem(val thingList: Array<Thing>, val maxWeight: Int) {
     }
 
     private fun randomGeneration(): Array<Array<Boolean>> {
-        val generation = Array(thingList.size, { Array(thingList.size, {false}) })
+        val generation = Array(thingList.size, { Array(thingList.size, { false }) })
         for (i in 0..thingList.lastIndex) {
             for (j in 0..thingList.lastIndex) {
                 val random = Random()
@@ -78,7 +78,7 @@ class KnapsackProblem(val thingList: Array<Thing>, val maxWeight: Int) {
 
     private fun nextGeneration(generation: Array<Array<Boolean>>): Array<Array<Boolean>> {
         val countOfNeeded = deFactorial(generation.size)
-        val nextGeneration = Array(thingList.size, { Array(thingList.size, {false})})
+        val nextGeneration = Array(thingList.size, { Array(thingList.size, { false }) })
         val fittest = generation.sortedBy { estimate(it) }.take(countOfNeeded)
         val random = Random()
         for (i in 0..generation.lastIndex) {
@@ -95,15 +95,15 @@ class KnapsackProblem(val thingList: Array<Thing>, val maxWeight: Int) {
         return nextGeneration
     }
 
-    private fun randomMask() : Array<Boolean> {
+    private fun randomMask(): Array<Boolean> {
         val random = Random()
-        return Array(thingList.size, { random.nextBoolean() } )
+        return Array(thingList.size, { random.nextBoolean() })
     }
 
     private fun mutation(mask: Array<Boolean>): Array<Boolean> {
         val newMask = mask.clone()
         val random = Random()
-        val position = random.nextInt(mask.size - 1)
+        val position = random.nextInt(mask.lastIndex)
         newMask[position] = !newMask[position]
         return newMask
     }
