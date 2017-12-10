@@ -39,7 +39,7 @@ class KnapsackProblem(val thingList: Array<Thing>, val maxWeight: Int) {
     fun knapsack(countOfMutations: Int): Array<Boolean> {
         var mutationCount = countOfMutations
         var generation = randomGeneration()
-        var bestMask = generation.maxBy { estimate(it) } ?: generation[0]
+        var bestMask = generation.maxBy { estimate(it) }!!
         var bestEstimation = estimate(bestMask)
         while (mutationCount > 0 && bestEstimation != 1.0 ) {
             val estimateOfGeneration = estimate(generation)
@@ -55,7 +55,7 @@ class KnapsackProblem(val thingList: Array<Thing>, val maxWeight: Int) {
                 val index = random.nextInt(thingList.lastIndex)
                 generation[index] = randomMask()
             }
-            val bestOfGeneration = generation.maxBy { estimate(it) } ?: generation[0]
+            val bestOfGeneration = generation.maxBy { estimate(it) }!!
             val estimationOfMask = estimate(bestOfGeneration)
             if (estimationOfMask > bestEstimation){
                 bestMask = bestOfGeneration

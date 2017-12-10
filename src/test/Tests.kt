@@ -18,7 +18,7 @@ class Tests {
         prn(firstMask)
         println(knapsack.getCost(firstMask))
         println(knapsack.getWeight(firstMask))
-        val secondMask = knapsack.knapsack(100)
+        val secondMask = knapsack.knapsack(3)
         prn(firstMask)
         println(knapsack.getCost(secondMask))
         println(knapsack.getWeight(secondMask))
